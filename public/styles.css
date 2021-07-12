@@ -1,0 +1,99 @@
+* {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body,
+.tweet-area {
+  background-color: #15202b;
+}
+
+.main {
+  width: 42%;
+  margin: auto;
+  position: relative;
+}
+
+/* Form */
+
+.tweet-area {
+  width: 100%;
+  margin-top: 5px;
+  border: 2px solid #cccccc;
+  border-radius: 6px;
+  color: #cccccc;
+  resize: none;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 15px 12px;
+}
+
+.tweet-area::placeholder {
+  color: #cccccc;
+}
+
+form p {
+  display: inline-block;
+  position: relative;
+  left: 15px;
+  bottom: 50px;
+  color: #721c24;
+  background-color: #f8d7da;
+  padding: 6px;
+  border-radius: 4px;
+}
+
+.tweet-btn {
+  background-color: #007bff;
+  color: white;
+  width: 68px;
+  height: 34px;
+  border-radius: 4px;
+  border: none;
+  position: absolute;
+  transition: 0.2s;
+  top: 140px;
+  right: 10px;
+}
+
+.tweet-btn:hover {
+  background-color: white;
+  border: 1px solid white;
+  color: #007bff;
+}
+
+.tweet-btn:disabled {
+  background-color: #b2b1b9;
+}
+
+/* Tweet */
+
+.tweet-box {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  width: 100%;
+  background: #343a40;
+  border-radius: 6px;
+  padding: 25px;
+}
+
+.tweet-box-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tweet-box-top span {
+  color: #6c757d;
+}
+
+.tweet-box p {
+  word-break: break-all;
+  color: white;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 120px;
+  margin-top: 15px;
+}
