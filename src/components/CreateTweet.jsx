@@ -1,28 +1,43 @@
 import React, { useState, useEffect } from "react";
 
 function CreateTweet(props) {
-  const [tweet, setTweet] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
+  const [tweet, setTweet] = useState({
+    content: "",
+    userName: "Tamir",
+    date: new Date().toISOString(),
+  });
 
   useEffect(() => {
-    if (tweet.length > 140) {
+    if (tweet.content.length > 140) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
     }
   }, [tweet]);
 
+  function handleChange(e) {
+    setTweet((prev) => {
+      return { ...prev, content: e.target.value };
+    });
+  }
+
   function handleSubmit(e) {
-    props.addTweet(tweet);
-    setTweet("");
     e.preventDefault();
+    if (tweet.content.length === 0) return;
+    props.addTweet(tweet);
+    setTweet({
+      content: "",
+      userName: "TamirShriki",
+      date: new Date().toISOString(),
+    });
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <textarea
-        onChange={(e) => setTweet(e.target.value)}
-        value={tweet}
+        onChange={handleChange}
+        value={tweet.content}
         placeholder="What you have in mind..."
         rows="6"
         maxLength="350"

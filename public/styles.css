@@ -61,11 +61,23 @@ form p {
 .tweet-btn:hover {
   background-color: white;
   border: 1px solid white;
+  cursor: pointer;
   color: #007bff;
 }
 
 .tweet-btn:disabled {
   background-color: #b2b1b9;
+}
+
+.tweet-btn:disabled:hover {
+  background-color: #b2b1b9;
+  color: white;
+  cursor: default;
+  border: none;
+}
+
+.in-progress {
+  margin-top: 40px;
 }
 
 /* Tweet */

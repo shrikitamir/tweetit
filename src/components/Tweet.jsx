@@ -4,8 +4,8 @@ function Tweet(props) {
   return (
     <div className="tweet-box">
       <div className="tweet-box-top">
-        <span>tamirshriki</span>
-        <span>11/07/2021 15:12:41</span>
+        <span>{props.userName}</span>
+        <span>{props.date}</span>
       </div>
       <p>{props.content}</p>
     </div>
