@@ -8,7 +8,11 @@ function CreateTweet(props) {
   useEffect(() => {
     localForage.getItem("userName").then((data) => {
       appContext.setTweet((prev) => {
-        return { ...prev, userName: data };
+        if (data) {
+          return { ...prev, userName: data };
+        } else {
+          return { ...prev, userName: "Undefined" };
+        }
       });
     });
     // eslint-disable-next-line
