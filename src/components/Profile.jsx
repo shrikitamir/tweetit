@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import AppContext from "../context/AppContext";
 import localForage from "localforage";
 
 function Profile() {
-  const [profile, setProfile] = useState("");
+  const appContext = useContext(AppContext);
 
   function handleChange(e) {
-    setProfile(e.target.value);
+    appContext.setProfile(e.target.value);
   }
 
   function handleClick() {
-    localForage.setItem("userName", profile);
+    localForage.setItem("userName", appContext.profile);
+    appContext.setProfile("");
   }
 
   return (
@@ -19,10 +21,14 @@ function Profile() {
       <input
         className="profile-input"
         onChange={handleChange}
-        value={profile}
+        value={appContext.profile}
         type="text "
       />
-      <button className="profile-btn" onClick={handleClick}>
+      <button
+        value={appContext.profile}
+        className="profile-btn"
+        onClick={handleClick}
+      >
         Save
       </button>
     </div>

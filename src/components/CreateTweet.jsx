@@ -1,41 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
+import AppContext from "../context/AppContext";
 import localForage from "localforage";
 
 function CreateTweet(props) {
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [tweet, setTweet] = useState({
-    content: "",
-    userName: "",
-    date: new Date().toISOString(),
-  });
+  const appContext = useContext(AppContext);
 
   useEffect(() => {
     localForage.getItem("userName").then((data) => {
-      setTweet((prev) => {
+      appContext.setTweet((prev) => {
         return { ...prev, userName: data };
       });
     });
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (tweet.content.length > 140) {
-      setIsDisabled(true);
+    if (appContext.tweet.content.length > 140) {
+      appContext.setIsDisabled(true);
     } else {
-      setIsDisabled(false);
+      appContext.setIsDisabled(false);
     }
-  }, [tweet]);
+    // eslint-disable-next-line
+  }, [appContext.tweet]);
 
   function handleChange(e) {
-    setTweet((prev) => {
+    appContext.setTweet((prev) => {
       return { ...prev, content: e.target.value };
     });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (tweet.content.length === 0) return;
-    props.addTweet(tweet);
-    setTweet((prev) => {
+    if (appContext.tweet.content.length === 0) return;
+    props.addTweet(appContext.tweet);
+    appContext.setTweet((prev) => {
       return { ...prev, content: "" };
     });
   }
@@ -44,7 +42,7 @@ function CreateTweet(props) {
     <form onSubmit={handleSubmit}>
       <textarea
         onChange={handleChange}
-        value={tweet.content}
+        value={appContext.tweet.content}
         placeholder="What you have in mind..."
         rows="6"
         maxLength="350"
@@ -52,8 +50,14 @@ function CreateTweet(props) {
         className="tweet-area"
         type="text"
       />
-      {isDisabled && <p>The tweet can't contain more then 140 chars.</p>}
-      <button type="submit" disabled={isDisabled} className="tweet-btn">
+      {appContext.isDisabled && (
+        <p>The tweet can't contain more then 140 chars.</p>
+      )}
+      <button
+        type="submit"
+        disabled={appContext.isDisabled}
+        className="tweet-btn"
+      >
         TweetIt!
       </button>
     </form>

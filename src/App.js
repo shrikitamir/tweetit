@@ -8,9 +8,17 @@ import CreateTweet from "./components/CreateTweet";
 import Tweet from "./components/Tweet";
 import Nav from "./components/Nav";
 import Profile from "./components/Profile";
+import AppContext from "./context/AppContext";
 
 function App() {
   const [tweetsArr, setTweetsArr] = useState([]);
+  const [profile, setProfile] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [tweet, setTweet] = useState({
+    content: "",
+    userName: "",
+    date: new Date().toISOString(),
+  });
 
   useEffect(() => {
     axios
@@ -41,35 +49,46 @@ function App() {
 
   return (
     <>
-      <Router>
-        <Nav />
-        <Switch>
-          <Route exact={true} path="/">
-            <div className="main">
-              <CreateTweet
-                addTweet={
-                  tweetsArr.length
-                    ? addTweet
-                    : () => alert("Cant post while loading!")
-                }
-              />
-              {tweetsArr.length ? (
-                tweetsArr.map((e) => (
-                  <Tweet
-                    key={uuid()}
-                    userName={e.userName}
-                    date={e.date}
-                    content={e.content}
-                  />
-                ))
-              ) : (
-                <LinearProgress className="in-progress" />
-              )}
-            </div>
-          </Route>
-          <Route path="/profile" component={Profile} />
-        </Switch>
-      </Router>
+      <AppContext.Provider
+        value={{
+          profile: profile,
+          setProfile: setProfile,
+          isDisabled: isDisabled,
+          setIsDisabled: setIsDisabled,
+          tweet: tweet,
+          setTweet: setTweet,
+        }}
+      >
+        <Router>
+          <Nav />
+          <Switch>
+            <Route exact={true} path="/">
+              <div className="main">
+                <CreateTweet
+                  addTweet={
+                    tweetsArr.length
+                      ? addTweet
+                      : () => alert("Cant post while loading!")
+                  }
+                />
+                {tweetsArr.length ? (
+                  tweetsArr.map((e) => (
+                    <Tweet
+                      key={uuid()}
+                      userName={e.userName}
+                      date={e.date}
+                      content={e.content}
+                    />
+                  ))
+                ) : (
+                  <LinearProgress className="in-progress" />
+                )}
+              </div>
+            </Route>
+            <Route path="/profile" component={Profile} />
+          </Switch>
+        </Router>
+      </AppContext.Provider>
     </>
   );
 }
