@@ -35,10 +35,8 @@ function CreateTweet(props) {
     e.preventDefault();
     if (tweet.content.length === 0) return;
     props.addTweet(tweet);
-    setTweet({
-      content: "",
-      userName: "",
-      date: new Date().toISOString(),
+    setTweet((prev) => {
+      return { ...prev, content: "" };
     });
   }
 

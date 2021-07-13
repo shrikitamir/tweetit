@@ -5,7 +5,7 @@ function Nav() {
   return (
     <nav>
       <ul>
-        <Link className="nav-link" exact={true} to="/">
+        <Link className="nav-link" to="/">
           <li>Home</li>
         </Link>
         <Link className="nav-link" to="./profile">

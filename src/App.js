@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import CreateTweet from "./components/CreateTweet";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import axios from "axios";
+import { v4 as uuid } from "uuid";
+import baseURL from "./lib";
+import CreateTweet from "./components/CreateTweet";
 import Tweet from "./components/Tweet";
 import Nav from "./components/Nav";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import baseURL from "./lib";
-import { v4 as uuid } from "uuid";
 import Profile from "./components/Profile";
-import axios from "axios";
 
 function App() {
   const [tweetsArr, setTweetsArr] = useState([]);
@@ -17,12 +17,25 @@ function App() {
       .get(baseURL)
       .then((res) => setTweetsArr(res.data.tweets))
       .catch((err) => console.error(err));
-  }, [tweetsArr]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      axios
+        .get(baseURL)
+        .then((res) => setTweetsArr(res.data.tweets))
+        .catch((err) => console.error(err));
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   function addTweet(tweet) {
     axios.post(baseURL, tweet).catch((err) => {
       alert("POST FAILED!");
       console.log(err);
+    });
+    setTweetsArr((prev) => {
+      return [tweet, ...prev];
     });
   }
 
