@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
+import localForage from "localforage";
 
 function CreateTweet(props) {
   const [isDisabled, setIsDisabled] = useState(false);
   const [tweet, setTweet] = useState({
     content: "",
-    userName: "Tamir",
+    userName: "",
     date: new Date().toISOString(),
   });
+
+  useEffect(() => {
+    localForage.getItem("userName").then((data) => {
+      setTweet((prev) => {
+        return { ...prev, userName: data };
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (tweet.content.length > 140) {
@@ -28,7 +37,7 @@ function CreateTweet(props) {
     props.addTweet(tweet);
     setTweet({
       content: "",
-      userName: "TamirShriki",
+      userName: "",
       date: new Date().toISOString(),
     });
   }

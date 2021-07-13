@@ -6,8 +6,43 @@
 }
 
 body,
-.tweet-area {
+.tweet-area,
+.profile-input {
   background-color: #15202b;
+}
+
+/* Nav */
+
+nav {
+  width: 75%;
+  border-radius: 5px;
+  margin: auto;
+  margin-bottom: 45px;
+  display: flex;
+  align-items: center;
+  min-height: 8.5vh;
+  background-color: #343a40;
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+nav ul li {
+  margin-left: 42px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: #6c757d;
 }
 
 .main {
@@ -18,7 +53,8 @@ body,
 
 /* Form */
 
-.tweet-area {
+.tweet-area,
+.profile-input {
   width: 100%;
   margin-top: 5px;
   border: 2px solid #cccccc;
@@ -45,7 +81,8 @@ form p {
   border-radius: 4px;
 }
 
-.tweet-btn {
+.tweet-btn,
+.profile-btn {
   background-color: #007bff;
   color: white;
   width: 68px;
@@ -58,18 +95,21 @@ form p {
   right: 10px;
 }
 
-.tweet-btn:hover {
+.tweet-btn:hover,
+.profile-btn:hover {
   background-color: white;
   border: 1px solid white;
   cursor: pointer;
   color: #007bff;
 }
 
-.tweet-btn:disabled {
+.tweet-btn:disabled,
+.profile-btn:disabled {
   background-color: #b2b1b9;
 }
 
-.tweet-btn:disabled:hover {
+.tweet-btn:disabled:hover,
+.profile-btn:disabled:hover {
   background-color: #b2b1b9;
   color: white;
   cursor: default;
@@ -108,4 +148,28 @@ form p {
   line-height: 18px;
   margin-right: 120px;
   margin-top: 15px;
+}
+
+/* Profile */
+
+.profile-header {
+  font-size: 36px;
+  color: white;
+  margin-bottom: 22px;
+}
+
+.label {
+  display: block;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.profile-input {
+  width: 95%;
+  padding: 12px 12px;
+}
+
+.profile-btn {
+  top: 160px;
+  right: 42px;
 }
