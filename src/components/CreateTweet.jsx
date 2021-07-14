@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
-import AppContext from "../context/AppContext";
 import localForage from "localforage";
+import AppContext from "../context/AppContext";
 
 function CreateTweet(props) {
   const appContext = useContext(AppContext);
@@ -11,7 +11,7 @@ function CreateTweet(props) {
         if (data) {
           return { ...prev, userName: data };
         } else {
-          return { ...prev, userName: "Undefined" };
+          return { ...prev, userName: "undefined" };
         }
       });
     });

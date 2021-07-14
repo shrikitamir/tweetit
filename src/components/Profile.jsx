@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
-import AppContext from "../context/AppContext";
+import React, { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import localForage from "localforage";
+import AppContext from "../context/AppContext";
 
 function Profile() {
   const appContext = useContext(AppContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    appContext.setCurrentPage(location.pathname);
+    // eslint-disable-next-line
+  }, []);
 
   function handleChange(e) {
     appContext.setProfile(e.target.value);

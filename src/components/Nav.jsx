@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import AppContext from "../context/AppContext";
 
 function Nav() {
+  const appContext = useContext(AppContext);
+
   return (
     <nav>
       <ul>
-        <Link className="nav-link" to="/">
+        <Link
+          className={
+            appContext.currentPage === "/" ? "nav-link-selected" : "nav-link"
+          }
+          to="/"
+        >
           <li>Home</li>
         </Link>
-        <Link className="nav-link" to="./profile">
+        <Link
+          className={
+            appContext.currentPage === "/profile"
+              ? "nav-link-selected"
+              : "nav-link"
+          }
+          to="./profile"
+        >
           <li>Profile</li>
         </Link>
       </ul>

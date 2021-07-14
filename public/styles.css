@@ -11,6 +11,10 @@ body,
   background-color: #15202b;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 /* Nav */
 
 nav {
@@ -36,12 +40,17 @@ nav ul li {
   margin-left: 42px;
 }
 
-.nav-link {
+.nav-link,
+.nav-link-selected {
   color: white;
   text-decoration: none;
 }
 
 .nav-link:hover {
+  color: #6c757d;
+}
+
+.nav-link-selected {
   color: #6c757d;
 }
 
