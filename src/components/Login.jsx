@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect } from "react";
 import { withRouter, Redirect } from "react-router";
 import { useLocation, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
-import { AuthContext } from "../Auth.js";
+import { AuthContext } from "../context/Auth.js";
 import firebase from "../firebase.js";
 
 const Login = ({ history }) => {

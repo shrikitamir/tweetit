@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import AppContext from "./context/AppContext";
-import { AuthProvider } from "./Auth";
+import { AuthProvider } from "./context/Auth";
 import PrivateRoute from "./PrivateRoute";
 import Home from "./components/Home";
 import Profile from "./components/Profile";

@@ -10,7 +10,6 @@ import Tweet from "./Tweet";
 const Home = () => {
   const appContext = useContext(AppContext);
   const location = useLocation();
-  // Check whats wrong with the sort by date thingy.
   const ref = firebase.firestore().collection("tweets");
 
   useEffect(() => {
