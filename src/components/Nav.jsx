@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 
-function Nav() {
+const Nav = () => {
   const appContext = useContext(AppContext);
 
   return (
@@ -26,9 +26,19 @@ function Nav() {
         >
           <li>Profile</li>
         </Link>
+        <Link
+          className={
+            appContext.currentPage === "/login"
+              ? "nav-link-selected login-link"
+              : "nav-link login-link"
+          }
+          to="./login"
+        >
+          <li>Log in</li>
+        </Link>
       </ul>
     </nav>
   );
-}
+};
 
 export default Nav;

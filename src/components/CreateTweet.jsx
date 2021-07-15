@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from "react";
-import localForage from "localforage";
 import AppContext from "../context/AppContext";
+import localForage from "localforage";
 
-function CreateTweet(props) {
+const CreateTweet = (props) => {
   const appContext = useContext(AppContext);
 
   useEffect(() => {
@@ -59,13 +59,13 @@ function CreateTweet(props) {
       )}
       <button
         type="submit"
-        disabled={appContext.isDisabled}
+        disabled={appContext.isDisabled || appContext.tweetsArr[0] === 1}
         className="tweet-btn"
       >
         TweetIt!
       </button>
     </form>
   );
-}
+};
 
 export default CreateTweet;
