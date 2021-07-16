@@ -3,32 +3,30 @@ import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 
 const Nav = () => {
-  const appContext = useContext(AppContext);
+  const { currentPage } = useContext(AppContext);
 
   return (
     <nav>
       <ul>
+        <div>
+          <Link
+            className={currentPage === "/" ? "nav-link-selected" : "nav-link"}
+            to="/"
+          >
+            <li>Home</li>
+          </Link>
+          <Link
+            className={
+              currentPage === "/profile" ? "nav-link-selected" : "nav-link"
+            }
+            to="./profile"
+          >
+            <li>Profile</li>
+          </Link>
+        </div>
         <Link
           className={
-            appContext.currentPage === "/" ? "nav-link-selected" : "nav-link"
-          }
-          to="/"
-        >
-          <li>Home</li>
-        </Link>
-        <Link
-          className={
-            appContext.currentPage === "/profile"
-              ? "nav-link-selected"
-              : "nav-link"
-          }
-          to="./profile"
-        >
-          <li>Profile</li>
-        </Link>
-        <Link
-          className={
-            appContext.currentPage === "/login"
+            currentPage === "/login"
               ? "nav-link-selected login-link"
               : "nav-link login-link"
           }

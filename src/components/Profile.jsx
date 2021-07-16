@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import firebase from "../firebase.js";
-import localForage from "localforage";
 
 const Profile = () => {
   const appContext = useContext(AppContext);
@@ -18,7 +17,10 @@ const Profile = () => {
   }
 
   function handleClick() {
-    localForage.setItem("userName", appContext.profile);
+    const user = firebase.auth().currentUser;
+    user.updateProfile({
+      displayName: appContext.profile,
+    });
     appContext.setProfile("");
   }
 
@@ -41,6 +43,7 @@ const Profile = () => {
           value={appContext.profile}
           className="profile-btn"
           onClick={handleClick}
+          type="submit"
         >
           Save
         </button>

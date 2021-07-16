@@ -30,11 +30,15 @@ nav {
   color: white;
 }
 
-nav ul {
+nav ul,
+nav ul div {
   display: flex;
-  justify-content: space-around;
-  align-items: center;
   list-style: none;
+}
+
+nav ul {
+  width: 100%;
+  justify-content: space-between;
 }
 
 nav ul li {
@@ -56,7 +60,7 @@ nav ul li {
 }
 
 .login-link {
-  margin-left: 850px;
+  margin-right: 40px;
 }
 
 /* Main */
@@ -104,19 +108,24 @@ nav ul li {
   padding: 15px 12px;
 }
 
+.tweet-area {
+  margin-bottom: 35px;
+}
+
 .tweet-area::placeholder {
   color: #cccccc;
 }
 
 form p {
   display: inline-block;
-  position: relative;
-  left: 15px;
-  bottom: 50px;
+  position: absolute;
+  left: 13px;
+  bottom: 402px;
   color: #721c24;
   background-color: #f8d7da;
   padding: 6px;
   border-radius: 4px;
+  margin: 0;
 }
 
 .tweet-btn,
@@ -232,4 +241,10 @@ form p {
 
 .not-a-user:hover {
   color: #6c757d;
+}
+
+@media screen and (max-width: 1000px) {
+  .sign-out {
+    top: 73px;
+  }
 }

@@ -1,19 +1,19 @@
 import React, { useEffect, useContext } from "react";
 import AppContext from "../context/AppContext";
-import localForage from "localforage";
+import firebase from "../firebase.js";
 
-const CreateTweet = (props) => {
+const CreateTweet = () => {
   const appContext = useContext(AppContext);
+  const ref = firebase.firestore().collection("tweets");
 
   useEffect(() => {
-    localForage.getItem("userName").then((data) => {
-      appContext.setTweet((prev) => {
-        if (data) {
-          return { ...prev, userName: data };
-        } else {
-          return { ...prev, userName: "undefined" };
-        }
-      });
+    const user = firebase.auth().currentUser;
+    appContext.setTweet((prev) => {
+      if (user.displayName) {
+        return { ...prev, userName: user.displayName };
+      } else {
+        return { ...prev, userName: "undefined" };
+      }
     });
     // eslint-disable-next-line
   }, []);
@@ -36,7 +36,12 @@ const CreateTweet = (props) => {
   function handleSubmit(e) {
     e.preventDefault();
     if (appContext.tweet.content.length === 0) return;
-    props.addTweet(appContext.tweet);
+    ref
+      .doc()
+      .set({ ...appContext.tweet, sort: new Date().getTime() })
+      .catch((err) => {
+        console.log(err);
+      });
     appContext.setTweet((prev) => {
       return { ...prev, content: "" };
     });

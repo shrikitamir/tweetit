@@ -4,5 +4,9 @@ import App from "./App";
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
-// Check whats wrong with the sort by date thingy.
-// Fix problem that you see the login page for a second when logged in and entering the site.
+// check about useCallback
+// Check about Auth provider
+// Check about PrivateRoute component
+// Check about withRouter
+// Check console errors
+// Check about changing Profile to form

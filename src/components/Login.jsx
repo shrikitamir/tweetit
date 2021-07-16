@@ -1,17 +1,17 @@
 import React, { useCallback, useContext, useEffect } from "react";
 import { withRouter, Redirect } from "react-router";
 import { useLocation, Link } from "react-router-dom";
+import firebase from "../firebase.js";
 import AppContext from "../context/AppContext";
 import { AuthContext } from "../context/Auth.js";
-import firebase from "../firebase.js";
 
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
-  const appContext = useContext(AppContext);
+  const { setCurrentPage } = useContext(AppContext);
   const location = useLocation();
 
   useEffect(() => {
-    appContext.setCurrentPage(location.pathname);
+    setCurrentPage(location.pathname);
     // eslint-disable-next-line
   }, []);
 

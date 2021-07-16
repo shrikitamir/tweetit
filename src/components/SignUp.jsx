@@ -17,6 +17,7 @@ const SignUp = ({ history }) => {
         alert(err);
       }
     },
+    // eslint-disable-next-line
     [history]
   );
 

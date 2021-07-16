@@ -2,8 +2,8 @@ import React, { useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import firebase from "../firebase.js";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import { v4 as uuid } from "uuid";
+import LinearProgress from "@material-ui/core/LinearProgress";
 import CreateTweet from "./CreateTweet";
 import Tweet from "./Tweet";
 
@@ -14,9 +14,9 @@ const Home = () => {
 
   useEffect(() => {
     appContext.setCurrentPage(location.pathname);
-    ref.onSnapshot((querySnapshot) => {
+    ref.orderBy("sort", "desc").onSnapshot((tweets) => {
       const items = [];
-      querySnapshot.forEach((doc) => {
+      tweets.forEach((doc) => {
         items.push(doc.data());
       });
       appContext.setTweetsArr(items);
@@ -24,28 +24,13 @@ const Home = () => {
     // eslint-disable-next-line
   }, []);
 
-  function addTweet(tweet) {
-    ref
-      .doc()
-      .set(tweet)
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   return (
     <>
       <button className="sign-out" onClick={() => firebase.auth().signOut()}>
         Sign Out
       </button>
       <div className="main">
-        <CreateTweet
-          addTweet={
-            appContext.tweetsArr
-              ? addTweet
-              : () => alert("Cant post while loading!")
-          }
-        />
+        <CreateTweet />
         {appContext.tweetsArr[0] === 1 ? (
           <LinearProgress className="in-progress" />
         ) : (
