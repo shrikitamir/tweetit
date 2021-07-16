@@ -72,8 +72,6 @@ nav ul li {
 }
 
 .sign-out {
-  background-color: white;
-  color: white;
   color: #343a40;
   width: 80px;
   height: 34px;
@@ -229,6 +227,26 @@ form p {
 .login-btn {
   top: 237px;
   right: 42px;
+}
+
+.login-btn-google {
+  color: #343a40;
+  position: absolute;
+  border: 1px solid white;
+  top: 237px;
+  right: 120px;
+  width: 130px;
+  height: 34px;
+  border-radius: 4px;
+  border: none;
+  transition: 0.2s;
+}
+
+.login-btn-google:hover {
+  background-color: #343a40;
+  border: none;
+  cursor: pointer;
+  color: white;
 }
 
 .not-a-user {

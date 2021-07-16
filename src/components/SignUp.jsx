@@ -1,9 +1,18 @@
-import React, { useCallback } from "react";
-import { withRouter } from "react-router";
+import React, { useCallback, useContext } from "react";
+import { withRouter, Redirect } from "react-router";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/Auth.js";
 import firebase from "firebase";
 
 const SignUp = ({ history }) => {
+  const { currentUser } = useContext(AuthContext);
+
+  const handleGoogleSignUp = async () => {
+    const google = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(google);
+    history.push("/");
+  };
+
   const handleSignUp = useCallback(
     async (e) => {
       e.preventDefault();
@@ -20,6 +29,10 @@ const SignUp = ({ history }) => {
     // eslint-disable-next-line
     [history]
   );
+
+  if (currentUser) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="main">
@@ -46,6 +59,9 @@ const SignUp = ({ history }) => {
         </label>
         <button className="login-btn" type="submit">
           Sign up
+        </button>
+        <button className="login-btn-google" onClick={handleGoogleSignUp}>
+          Sign up with Google
         </button>
       </form>
       <Link to="/login">

@@ -15,6 +15,12 @@ const Login = ({ history }) => {
     // eslint-disable-next-line
   }, []);
 
+  const handleGoogleSignUp = async () => {
+    const google = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(google);
+    history.push("/");
+  };
+
   const handleLogin = useCallback(
     async (e) => {
       e.preventDefault();
@@ -60,6 +66,9 @@ const Login = ({ history }) => {
         </label>
         <button className="login-btn" type="submit">
           Log in
+        </button>
+        <button className="login-btn-google" onClick={handleGoogleSignUp}>
+          Log in with Google
         </button>
       </form>
       <Link to="/signup">
