@@ -2,15 +2,32 @@ import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/Auth.js";
+import AppContext from "../context/AppContext";
 import firebase from "firebase";
 
 const SignUp = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
+  const appContext = useContext(AppContext);
+  const ref = firebase.firestore().collection("users");
 
   const handleGoogleSignUp = async () => {
-    const google = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(google);
-    history.push("/");
+    try {
+      const google = new firebase.auth.GoogleAuthProvider();
+      await firebase
+        .auth()
+        .signInWithPopup(google)
+        .then((cred) => {
+          ref.doc(cred.user.uid).set({
+            userName: "undefined",
+            photoUrl:
+              "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1",
+          });
+          appContext.setUserId(cred.user.uid);
+        });
+      history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSignUp = useCallback(
@@ -20,10 +37,18 @@ const SignUp = ({ history }) => {
       try {
         await firebase
           .auth()
-          .createUserWithEmailAndPassword(email.value, password.value);
+          .createUserWithEmailAndPassword(email.value, password.value)
+          .then((cred) => {
+            ref.doc(cred.user.uid).set({
+              userName: "undefined",
+              photoUrl:
+                "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1",
+            });
+            appContext.setUserId(cred.user.uid);
+          });
         history.push("/");
       } catch (err) {
-        alert(err);
+        console.log(err);
       }
     },
     // eslint-disable-next-line

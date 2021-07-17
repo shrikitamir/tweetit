@@ -7,18 +7,6 @@ const CreateTweet = () => {
   const ref = firebase.firestore().collection("tweets");
 
   useEffect(() => {
-    const user = firebase.auth().currentUser;
-    appContext.setTweet((prev) => {
-      if (user.displayName) {
-        return { ...prev, userName: user.displayName };
-      } else {
-        return { ...prev, userName: "undefined" };
-      }
-    });
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
     if (appContext.tweet.content.length > 140) {
       appContext.setIsDisabled(true);
     } else {

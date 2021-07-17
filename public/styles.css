@@ -49,6 +49,7 @@ nav ul li {
 .nav-link-selected {
   color: white;
   text-decoration: none;
+  transition: 0.3s;
 }
 
 .nav-link:hover {
@@ -60,7 +61,7 @@ nav ul li {
 }
 
 .login-link {
-  margin-right: 40px;
+  margin-right: 42px;
 }
 
 /* Main */
@@ -88,6 +89,21 @@ nav ul li {
   border: none;
   cursor: pointer;
   color: white;
+}
+
+.profile-image {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  right: 125px;
+  top: 10px;
+  border: 2px solid #007bff;
+  transition: 0.2s;
+}
+
+.profile-image:hover {
+  border: 2px solid #787a91;
 }
 
 /* Form */
@@ -118,7 +134,7 @@ form p {
   display: inline-block;
   position: absolute;
   left: 13px;
-  bottom: 402px;
+  top: 143px;
   color: #721c24;
   background-color: #f8d7da;
   padding: 6px;
@@ -197,6 +213,22 @@ form p {
   margin-top: 15px;
 }
 
+.tweet-username {
+  position: relative;
+  bottom: 15px;
+  left: 8px;
+}
+
+.tweet-img {
+  right: 3px;
+  bottom: 5px;
+  position: relative;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin: 0;
+}
+
 /* Profile / Login */
 
 .profile-header,
@@ -220,8 +252,58 @@ form p {
 }
 
 .profile-btn {
-  top: 160px;
-  right: 42px;
+  top: 193px;
+  right: 32px;
+}
+
+.image-label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: white;
+  font-size: 17px;
+}
+
+.upload-file {
+  color: white;
+  font-size: 14px;
+}
+
+.img-upload-load {
+  position: absolute;
+  left: 385px;
+  top: 298px;
+}
+
+.img-uploaded {
+  position: absolute;
+  font-size: 30px;
+  left: 394px;
+  top: 293px;
+}
+
+.username-approve {
+  position: absolute;
+  font-size: 30px;
+  left: 394px;
+  top: 205px;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: #007bff;
+  color: white;
+  width: 100px;
+  height: 34px;
+  border-radius: 4px;
+  border: none;
+  transition: 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  color: #007bff;
 }
 
 .login-btn {
@@ -262,7 +344,14 @@ form p {
 }
 
 @media screen and (max-width: 1000px) {
+  .main {
+    width: 80%;
+  }
   .sign-out {
-    top: 73px;
+    top: 66px;
+  }
+  .profile-image {
+    right: 30px;
+    top: 10px;
   }
 }

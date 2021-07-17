@@ -10,14 +10,16 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 
 function App() {
+  const [userId, setUserId] = useState(null);
+  const [image, setImage] = useState(null);
+  const [userName, setUserName] = useState(undefined);
   const [currentPage, setCurrentPage] = useState();
   const [isDisabled, setIsDisabled] = useState(false);
-  const [profile, setProfile] = useState("");
   const [tweetsArr, setTweetsArr] = useState([1]);
   const [tweet, setTweet] = useState({
     content: "",
     userName: "",
-    date: new Date().toTimeString(),
+    date: new Date().toISOString(),
   });
 
   return (
@@ -25,8 +27,12 @@ function App() {
       <AuthProvider>
         <AppContext.Provider
           value={{
-            profile: profile,
-            setProfile: setProfile,
+            userId: userId,
+            setUserId: setUserId,
+            userName: userName,
+            setUserName: setUserName,
+            image: image,
+            setImage: setImage,
             isDisabled: isDisabled,
             setIsDisabled: setIsDisabled,
             tweetsArr: tweetsArr,

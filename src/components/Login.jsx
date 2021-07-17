@@ -7,18 +7,29 @@ import { AuthContext } from "../context/Auth.js";
 
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
-  const { setCurrentPage } = useContext(AppContext);
+  const appContext = useContext(AppContext);
   const location = useLocation();
+  const ref = firebase.firestore().collection("users");
 
   useEffect(() => {
-    setCurrentPage(location.pathname);
+    appContext.setCurrentPage(location.pathname);
     // eslint-disable-next-line
   }, []);
 
   const handleGoogleSignUp = async () => {
-    const google = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(google);
-    history.push("/");
+    try {
+      const google = new firebase.auth.GoogleAuthProvider();
+      await firebase
+        .auth()
+        .signInWithPopup(google)
+        .then((cred) => {
+          ref.doc(cred.user.uid).set({}, { merge: true });
+          appContext.setUserId(cred.user.uid);
+        });
+      history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleLogin = useCallback(
@@ -28,12 +39,16 @@ const Login = ({ history }) => {
       try {
         await firebase
           .auth()
-          .signInWithEmailAndPassword(email.value, password.value);
+          .signInWithEmailAndPassword(email.value, password.value)
+          .then((cred) => {
+            appContext.setUserId(cred.user.uid);
+          });
         history.push("/");
       } catch (err) {
-        alert(err);
+        console.log(err);
       }
     },
+    // eslint-disable-next-line
     [history]
   );
 
