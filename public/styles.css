@@ -12,6 +12,10 @@ body,
   background-color: #15202b;
 }
 
+body {
+  margin-bottom: 20px;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -181,6 +185,32 @@ form p {
 
 .in-progress {
   margin-top: 40px;
+}
+
+.load-more-btn {
+  background-color: #007bff;
+  color: white;
+  width: 130px;
+  height: 34px;
+  border-radius: 4px;
+  border: none;
+  transition: 0.2s;
+  margin-top: 20px;
+  margin-left: 40%;
+}
+
+.load-more-btn:hover {
+  background-color: white;
+  border: 1px solid white;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.no-more-tweets {
+  font-size: 30px;
+  color: white;
+  margin-top: 20px;
+  margin-left: 26%;
 }
 
 /* Tweet */

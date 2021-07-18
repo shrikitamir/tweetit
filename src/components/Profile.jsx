@@ -10,7 +10,7 @@ const Profile = () => {
   const [userNameApprove, setUserNameApprove] = useState(false);
   const appContext = useContext(AppContext);
   const location = useLocation();
-  const ref = firebase.firestore().collection("users");
+  const usersRef = firebase.firestore().collection("users");
 
   useEffect(() => {
     appContext.setCurrentPage(location.pathname);
@@ -24,7 +24,7 @@ const Profile = () => {
   function handleClick() {
     if (!appContext.userName) return;
     setUserNameApprove(true);
-    ref.doc(appContext.userId).set(
+    usersRef.doc(appContext.userId).set(
       {
         userName: appContext.userName,
       },
@@ -43,7 +43,7 @@ const Profile = () => {
     const fileRef = storageRef.child(file.name);
     await fileRef.put(file);
     fileRef.getDownloadURL().then((fileUrl) => {
-      ref.doc(appContext.userId).set(
+      usersRef.doc(appContext.userId).set(
         {
           photoUrl: fileUrl,
         },

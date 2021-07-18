@@ -8,7 +8,9 @@ import firebase from "firebase";
 const SignUp = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
   const appContext = useContext(AppContext);
-  const ref = firebase.firestore().collection("users");
+  const usersRef = firebase.firestore().collection("users");
+  const anonymous =
+    "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1";
 
   const handleGoogleSignUp = async () => {
     try {
@@ -17,16 +19,15 @@ const SignUp = ({ history }) => {
         .auth()
         .signInWithPopup(google)
         .then((cred) => {
-          ref.doc(cred.user.uid).set({
+          usersRef.doc(cred.user.uid).set({
             userName: "undefined",
-            photoUrl:
-              "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1",
+            photoUrl: anonymous,
           });
           appContext.setUserId(cred.user.uid);
         });
       history.push("/");
     } catch (err) {
-      console.log(err);
+      alert(err);
     }
   };
 
@@ -39,16 +40,15 @@ const SignUp = ({ history }) => {
           .auth()
           .createUserWithEmailAndPassword(email.value, password.value)
           .then((cred) => {
-            ref.doc(cred.user.uid).set({
+            usersRef.doc(cred.user.uid).set({
               userName: "undefined",
-              photoUrl:
-                "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1",
+              photoUrl: anonymous,
             });
             appContext.setUserId(cred.user.uid);
           });
         history.push("/");
       } catch (err) {
-        console.log(err);
+        alert(err);
       }
     },
     // eslint-disable-next-line

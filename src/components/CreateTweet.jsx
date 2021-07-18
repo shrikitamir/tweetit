@@ -4,7 +4,7 @@ import firebase from "../firebase.js";
 
 const CreateTweet = () => {
   const appContext = useContext(AppContext);
-  const ref = firebase.firestore().collection("tweets");
+  const tweetRef = firebase.firestore().collection("tweets");
 
   useEffect(() => {
     if (appContext.tweet.content.length > 140) {
@@ -24,9 +24,13 @@ const CreateTweet = () => {
   function handleSubmit(e) {
     e.preventDefault();
     if (appContext.tweet.content.length === 0) return;
-    ref
+    tweetRef
       .doc()
-      .set({ ...appContext.tweet, sort: new Date().getTime() })
+      .set({
+        ...appContext.tweet,
+        date: new Date().toISOString(),
+        sort: new Date().getTime(),
+      })
       .catch((err) => {
         console.log(err);
       });

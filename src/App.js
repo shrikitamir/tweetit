@@ -18,8 +18,6 @@ function App() {
   const [tweetsArr, setTweetsArr] = useState([1]);
   const [tweet, setTweet] = useState({
     content: "",
-    userName: "",
-    date: new Date().toISOString(),
   });
 
   return (
