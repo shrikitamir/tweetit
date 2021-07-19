@@ -4,7 +4,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import firebase from "../firebase.js";
 
 const Profile = () => {
-  const [loadingUpload, setLoadingUpload] = useState(false);
   const [imgApprove, setImgApprove] = useState(false);
   const [userNameApprove, setUserNameApprove] = useState(false);
   const appContext = useContext(AppContext);
@@ -30,7 +29,7 @@ const Profile = () => {
   };
 
   const handleFile = async (e) => {
-    setLoadingUpload(true);
+    appContext.setLoadingUpload(true);
     const file = e.target.files[0];
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(file.name);
@@ -44,7 +43,7 @@ const Profile = () => {
       );
       appContext.setImage(fileUrl);
     });
-    setLoadingUpload(false);
+    appContext.setLoadingUpload(false);
     setImgApprove(true);
     setTimeout(() => {
       setImgApprove(false);
@@ -75,7 +74,9 @@ const Profile = () => {
           Save
         </button>
       </div>
-      {loadingUpload && <CircularProgress className="img-upload-load" />}
+      {appContext.loadingUpload && (
+        <CircularProgress className="img-upload-load" />
+      )}
       {imgApprove && <p className="img-uploaded">👍</p>}
       {userNameApprove && <p className="username-approve">👍</p>}
     </>

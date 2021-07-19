@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import AppContext from "../context/AppContext";
 import { AuthContext } from "../context/Auth";
 
 const Nav = () => {
+  const appContext = useContext(AppContext);
   const { currentUser } = useContext(AuthContext);
 
   return (
@@ -10,14 +12,16 @@ const Nav = () => {
       <ul>
         {currentUser ? (
           <div>
-            <NavLink
-              exact
-              className="nav-link"
-              activeStyle={{ color: "white" }}
-              to="/"
-            >
-              <li>Home</li>
-            </NavLink>
+            {!appContext.loadingUpload && (
+              <NavLink
+                exact
+                className="nav-link"
+                activeStyle={{ color: "white" }}
+                to="/"
+              >
+                <li>Home</li>
+              </NavLink>
+            )}
             <NavLink
               className="nav-link"
               activeStyle={{ color: "white" }}

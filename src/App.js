@@ -11,6 +11,7 @@ import Login from "./components/Login";
 
 const App = () => {
   const [userId, setUserId] = useState(null);
+  const [loadingUpload, setLoadingUpload] = useState(false);
   const [image, setImage] = useState(null);
   const [userName, setUserName] = useState(undefined);
   const [currentPage, setCurrentPage] = useState();
@@ -27,6 +28,8 @@ const App = () => {
           value={{
             userId: userId,
             setUserId: setUserId,
+            loadingUpload: loadingUpload,
+            setLoadingUpload: setLoadingUpload,
             userName: userName,
             setUserName: setUserName,
             image: image,
