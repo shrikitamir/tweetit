@@ -25,14 +25,16 @@ const Home = () => {
         try {
           const docRef = usersRef.doc(appContext.userId);
           docRef.get().then((doc) => {
-            appContext.setImage(doc.data().photoUrl);
-            appContext.setTweet((prev) => {
-              return {
-                ...prev,
-                img: doc.data().photoUrl,
-                userName: doc.data().userName,
-              };
-            });
+            if (doc.exists) {
+              appContext.setImage(doc.data().photoUrl);
+              appContext.setTweet((prev) => {
+                return {
+                  ...prev,
+                  img: doc.data().photoUrl,
+                  userName: doc.data().userName,
+                };
+              });
+            }
           });
         } catch (err) {
           console.log(err);

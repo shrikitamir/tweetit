@@ -1,13 +1,13 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import AppContext from "../context/AppContext";
+// import AppContext from "../context/AppContext";
 import { AuthContext } from "../context/Auth.js";
 import firebase from "../firebase.js";
 
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
-  const appContext = useContext(AppContext);
+  // const appContext = useContext(AppContext);
   const usersRef = firebase.firestore().collection("users");
   const anonymous =
     "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1";
@@ -30,7 +30,7 @@ const Login = ({ history }) => {
                 });
               }
             });
-          appContext.setUserId(cred.user.uid);
+          // appContext.setUserId(cred.user.uid);
         });
       history.push("/");
     } catch (err) {
@@ -47,7 +47,7 @@ const Login = ({ history }) => {
           .auth()
           .signInWithEmailAndPassword(email.value, password.value)
           .then((cred) => {
-            appContext.setUserId(cred.user.uid);
+            // appContext.setUserId(cred.user.uid);
           });
         history.push("/");
       } catch (err) {
