@@ -1,39 +1,40 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import AppContext from "../context/AppContext";
+import { NavLink } from "react-router-dom";
+import { AuthContext } from "../context/Auth";
 
 const Nav = () => {
-  const { currentPage } = useContext(AppContext);
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <nav>
       <ul>
-        <div>
-          <Link
-            className={currentPage === "/" ? "nav-link-selected" : "nav-link"}
-            to="/"
+        {currentUser ? (
+          <div>
+            <NavLink
+              exact
+              className="nav-link"
+              activeStyle={{ color: "white" }}
+              to="/"
+            >
+              <li>Home</li>
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              activeStyle={{ color: "white" }}
+              to="./profile"
+            >
+              <li>Profile</li>
+            </NavLink>
+          </div>
+        ) : (
+          <NavLink
+            className="nav-link"
+            activeStyle={{ color: "white" }}
+            to="./login"
           >
-            <li>Home</li>
-          </Link>
-          <Link
-            className={
-              currentPage === "/profile" ? "nav-link-selected" : "nav-link"
-            }
-            to="./profile"
-          >
-            <li>Profile</li>
-          </Link>
-        </div>
-        <Link
-          className={
-            currentPage === "/login"
-              ? "nav-link-selected login-link"
-              : "nav-link login-link"
-          }
-          to="./login"
-        >
-          <li>Log in</li>
-        </Link>
+            <li>Log in</li>
+          </NavLink>
+        )}
       </ul>
     </nav>
   );

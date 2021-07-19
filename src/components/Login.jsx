@@ -1,6 +1,6 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import { AuthContext } from "../context/Auth.js";
 import firebase from "../firebase.js";
@@ -8,15 +8,9 @@ import firebase from "../firebase.js";
 const Login = ({ history }) => {
   const { currentUser } = useContext(AuthContext);
   const appContext = useContext(AppContext);
-  const location = useLocation();
   const usersRef = firebase.firestore().collection("users");
   const anonymous =
     "https://firebasestorage.googleapis.com/v0/b/tweetit-2a9fb.appspot.com/o/anonymous.jpg?alt=media&token=f7ca78e1-ac6d-46f1-8d19-ac3af0178ad1";
-
-  useEffect(() => {
-    appContext.setCurrentPage(location.pathname);
-    // eslint-disable-next-line
-  }, []);
 
   const handleGoogleSignUp = async () => {
     try {
@@ -25,10 +19,17 @@ const Login = ({ history }) => {
         .auth()
         .signInWithPopup(google)
         .then((cred) => {
-          usersRef.doc(cred.user.uid).set({
-            userName: "undefined",
-            photoUrl: anonymous,
-          });
+          usersRef
+            .doc(cred.user.uid)
+            .get()
+            .then((doc) => {
+              if (!doc.exists) {
+                usersRef.doc(cred.user.uid).set({
+                  userName: "undefined",
+                  photoUrl: anonymous,
+                });
+              }
+            });
           appContext.setUserId(cred.user.uid);
         });
       history.push("/");

@@ -1,6 +1,6 @@
 import React from "react";
 
-function Tweet(props) {
+const Tweet = (props) => {
   return (
     <div className="tweet-box">
       <div className="tweet-box-top">
@@ -13,6 +13,6 @@ function Tweet(props) {
       <p>{props.content}</p>
     </div>
   );
-}
+};
 
 export default Tweet;

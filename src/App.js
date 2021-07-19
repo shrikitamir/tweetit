@@ -9,7 +9,7 @@ import Nav from "./components/Nav";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 
-function App() {
+const App = () => {
   const [userId, setUserId] = useState(null);
   const [image, setImage] = useState(null);
   const [userName, setUserName] = useState(undefined);
@@ -52,6 +52,6 @@ function App() {
       </AuthProvider>
     </>
   );
-}
+};
 
 export default App;

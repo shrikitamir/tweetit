@@ -15,15 +15,15 @@ const CreateTweet = () => {
     // eslint-disable-next-line
   }, [appContext.tweet]);
 
-  function handleChange(e) {
+  const handleChange = (e) => {
     appContext.setTweet((prev) => {
       return { ...prev, content: e.target.value };
     });
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (appContext.tweet.content.length === 0) return;
+    if (!appContext.tweet.content) return;
     tweetRef
       .doc()
       .set({
@@ -37,7 +37,7 @@ const CreateTweet = () => {
     appContext.setTweet((prev) => {
       return { ...prev, content: "" };
     });
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>

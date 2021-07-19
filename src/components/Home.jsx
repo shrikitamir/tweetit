@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import firebase from "../firebase.js";
 import { v4 as uuid } from "uuid";
@@ -11,7 +11,6 @@ const Home = () => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [lastDoc, setLastDoc] = useState();
   const appContext = useContext(AppContext);
-  const location = useLocation();
   const usersRef = firebase.firestore().collection("users");
   const tweetRef = firebase
     .firestore()
@@ -44,8 +43,7 @@ const Home = () => {
   }, [appContext.userId]);
 
   useEffect(() => {
-    appContext.setCurrentPage(location.pathname);
-    tweetRef.limit(5).onSnapshot((tweets) => {
+    tweetRef.limit(10).onSnapshot((tweets) => {
       const items = [];
       const last = [];
       tweets.forEach((doc) => {
@@ -53,35 +51,47 @@ const Home = () => {
         last.push(doc);
       });
       appContext.setTweetsArr(items);
-      setLastDoc(last[last.length - 1]);
+      if (last[last.length - 1]) {
+        setLastDoc(last[last.length - 1]);
+      } else {
+        setIsEmpty(true);
+      }
     });
     // eslint-disable-next-line
   }, []);
 
-  function fetchMore() {
-    if (!isEmpty) {
-      tweetRef
-        .startAfter(lastDoc)
-        .limit(5)
-        .onSnapshot((tweets) => {
-          const isCollectionEmpty = tweets.size === 0;
-          if (!isCollectionEmpty) {
-            const items = [];
-            const last = [];
-            tweets.forEach((doc) => {
-              items.push(doc.data());
-              last.push(doc);
-            });
-            appContext.setTweetsArr((prev) => {
-              return [...prev, ...items];
-            });
-            setLastDoc(last[last.length - 1]);
-          } else {
-            setIsEmpty(true);
-          }
-        });
+  window.onscroll = () => {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+      if (!isEmpty) {
+        tweetRef
+          .startAfter(lastDoc)
+          .limit(10)
+          .onSnapshot((tweets) => {
+            const lastY = window.scrollY;
+            const isCollectionEmpty = tweets.size === 0;
+            if (!isCollectionEmpty) {
+              const items = [];
+              const last = [];
+              tweets.forEach((doc) => {
+                items.push(doc.data());
+                last.push(doc);
+              });
+              appContext.setTweetsArr((prev) => {
+                return [...prev, ...items];
+              });
+              window.scroll(0, lastY);
+              if (last[last.length - 1]) {
+                setLastDoc(last[last.length - 1]);
+              } else {
+                setIsEmpty(true);
+              }
+            } else {
+              setIsEmpty(true);
+            }
+          });
+      }
     }
-  }
+  };
 
   return (
     <>
@@ -108,13 +118,6 @@ const Home = () => {
             />
           ))
         )}
-        {appContext.tweetsArr[0] === 1
-          ? null
-          : !isEmpty && (
-              <button className="load-more-btn" onClick={fetchMore}>
-                Load more tweets!
-              </button>
-            )}
         {isEmpty && <p className="no-more-tweets">No more tweets to load!</p>}
       </div>
     </>

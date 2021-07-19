@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { withRouter, Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../context/Auth.js";
+import { AuthContext } from "../context/Auth";
 import AppContext from "../context/AppContext";
 import firebase from "firebase";
 
@@ -19,10 +19,17 @@ const SignUp = ({ history }) => {
         .auth()
         .signInWithPopup(google)
         .then((cred) => {
-          usersRef.doc(cred.user.uid).set({
-            userName: "undefined",
-            photoUrl: anonymous,
-          });
+          usersRef
+            .doc(cred.user.uid)
+            .get()
+            .then((doc) => {
+              if (!doc.exists) {
+                usersRef.doc(cred.user.uid).set({
+                  userName: "undefined",
+                  photoUrl: anonymous,
+                });
+              }
+            });
           appContext.setUserId(cred.user.uid);
         });
       history.push("/");
@@ -34,21 +41,25 @@ const SignUp = ({ history }) => {
   const handleSignUp = useCallback(
     async (e) => {
       e.preventDefault();
-      const { email, password } = e.target.elements;
-      try {
-        await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email.value, password.value)
-          .then((cred) => {
-            usersRef.doc(cred.user.uid).set({
-              userName: "undefined",
-              photoUrl: anonymous,
+      const { email, password, confirmPassword } = e.target.elements;
+      if (password.value === confirmPassword.value) {
+        try {
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(email.value, password.value)
+            .then((cred) => {
+              usersRef.doc(cred.user.uid).set({
+                userName: "undefined",
+                photoUrl: anonymous,
+              });
+              appContext.setUserId(cred.user.uid);
             });
-            appContext.setUserId(cred.user.uid);
-          });
-        history.push("/");
-      } catch (err) {
-        alert(err);
+          history.push("/");
+        } catch (err) {
+          alert(err);
+        }
+      } else {
+        alert("Passwords don't match");
       }
     },
     // eslint-disable-next-line
@@ -82,10 +93,22 @@ const SignUp = ({ history }) => {
             placeholder="Password"
           ></input>
         </label>
-        <button className="login-btn" type="submit">
+        <label className="login-label">
+          Confirm password
+          <input
+            className="login-input"
+            name="confirmPassword"
+            type="password"
+            placeholder="Confirm password"
+          ></input>
+        </label>
+        <button className="login-btn register-btn" type="submit">
           Sign up
         </button>
-        <button className="login-btn-google" onClick={handleGoogleSignUp}>
+        <button
+          className="login-btn-google register-btn-google"
+          onClick={handleGoogleSignUp}
+        >
           Sign up with Google
         </button>
       </form>

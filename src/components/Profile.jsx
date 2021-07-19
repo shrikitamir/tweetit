@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useContext, useState } from "react";
 import AppContext from "../context/AppContext";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import firebase from "../firebase.js";
@@ -9,34 +8,28 @@ const Profile = () => {
   const [imgApprove, setImgApprove] = useState(false);
   const [userNameApprove, setUserNameApprove] = useState(false);
   const appContext = useContext(AppContext);
-  const location = useLocation();
   const usersRef = firebase.firestore().collection("users");
 
-  useEffect(() => {
-    appContext.setCurrentPage(location.pathname);
-    // eslint-disable-next-line
-  }, []);
-
-  function handleChange(e) {
+  const handleChange = (e) => {
     appContext.setUserName(e.target.value);
-  }
+  };
 
-  function handleClick() {
+  const handleClick = () => {
     if (!appContext.userName) return;
-    setUserNameApprove(true);
     usersRef.doc(appContext.userId).set(
       {
         userName: appContext.userName,
       },
       { merge: true }
     );
+    setUserNameApprove(true);
     appContext.setUserName("");
     setTimeout(() => {
       setUserNameApprove(false);
     }, 2500);
-  }
+  };
 
-  async function handleFile(e) {
+  const handleFile = async (e) => {
     setLoadingUpload(true);
     const file = e.target.files[0];
     const storageRef = firebase.storage().ref();
@@ -56,13 +49,16 @@ const Profile = () => {
     setTimeout(() => {
       setImgApprove(false);
     }, 2500);
-  }
+  };
 
   return (
     <>
       <button className="sign-out" onClick={() => firebase.auth().signOut()}>
         Sign Out
       </button>
+      {appContext.image && (
+        <img src={appContext.image} alt="profile" className="profile-image" />
+      )}
       <div className="main">
         <p className="profile-header">Profile</p>
         <label className="profile-label">User Name</label>
