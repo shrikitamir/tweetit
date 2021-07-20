@@ -41,8 +41,9 @@ const Home = () => {
         }
       }
     })();
+    console.log("hi");
     // eslint-disable-next-line
-  }, [appContext.userId]);
+  }, [appContext.userId, appContext.nickName]);
 
   useEffect(() => {
     tweetRef.limit(10).onSnapshot((tweets) => {
