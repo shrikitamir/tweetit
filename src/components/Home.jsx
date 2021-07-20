@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import firebase from "../firebase.js";
 import { v4 as uuid } from "uuid";
@@ -27,11 +26,13 @@ const Home = () => {
           docRef.get().then((doc) => {
             if (doc.exists) {
               appContext.setImage(doc.data().photoUrl);
+              appContext.setNickName(doc.data().userName);
               appContext.setTweet((prev) => {
                 return {
                   ...prev,
                   img: doc.data().photoUrl,
                   userName: doc.data().userName,
+                  user: appContext.userId,
                 };
               });
             }
@@ -96,33 +97,24 @@ const Home = () => {
   };
 
   return (
-    <>
-      <button className="sign-out" onClick={() => firebase.auth().signOut()}>
-        Sign Out
-      </button>
-      {appContext.image && (
-        <Link to="/profile">
-          <img src={appContext.image} alt="profile" className="profile-image" />
-        </Link>
+    <div className="main">
+      <CreateTweet />
+      {appContext.tweetsArr[0] === 1 ? (
+        <LinearProgress className="in-progress" />
+      ) : (
+        appContext.tweetsArr.map((e) => (
+          <Tweet
+            key={uuid()}
+            userName={e.userName}
+            date={e.date}
+            content={e.content}
+            img={e.img}
+            user={e.user}
+          />
+        ))
       )}
-      <div className="main">
-        <CreateTweet />
-        {appContext.tweetsArr[0] === 1 ? (
-          <LinearProgress className="in-progress" />
-        ) : (
-          appContext.tweetsArr.map((e) => (
-            <Tweet
-              key={uuid()}
-              userName={e.userName}
-              date={e.date}
-              content={e.content}
-              img={e.img}
-            />
-          ))
-        )}
-        {isEmpty && <p className="no-more-tweets">No more tweets to load!</p>}
-      </div>
-    </>
+      {isEmpty && <p className="no-more-tweets">No more tweets to load!</p>}
+    </div>
   );
 };
 

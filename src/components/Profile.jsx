@@ -22,6 +22,7 @@ const Profile = () => {
       { merge: true }
     );
     setUserNameApprove(true);
+    appContext.setNickName(appContext.userName);
     appContext.setUserName("");
     setTimeout(() => {
       setUserNameApprove(false);
@@ -52,12 +53,6 @@ const Profile = () => {
 
   return (
     <>
-      <button className="sign-out" onClick={() => firebase.auth().signOut()}>
-        Sign Out
-      </button>
-      {appContext.image && (
-        <img src={appContext.image} alt="profile" className="profile-image" />
-      )}
       <div className="main">
         <p className="profile-header">Profile</p>
         <label className="profile-label">User Name</label>
@@ -66,7 +61,7 @@ const Profile = () => {
           onChange={handleChange}
           value={appContext.userName}
           type="text"
-          maxLength="25"
+          maxLength="14"
         />
         <label className="image-label">Profile Image</label>
         <input className="upload-file" type="file" onChange={handleFile} />

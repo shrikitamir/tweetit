@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 
 const App = () => {
+  const [nickName, setNickName] = useState("");
   const [userId, setUserId] = useState(null);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [image, setImage] = useState(null);
@@ -26,6 +27,8 @@ const App = () => {
       <AuthProvider>
         <AppContext.Provider
           value={{
+            nickName: nickName,
+            setNickName: setNickName,
             userId: userId,
             setUserId: setUserId,
             loadingUpload: loadingUpload,

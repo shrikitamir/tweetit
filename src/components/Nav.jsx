@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import AppContext from "../context/AppContext";
 import { AuthContext } from "../context/Auth";
+import firebase from "../firebase.js";
 
 const Nav = () => {
   const appContext = useContext(AppContext);
@@ -29,6 +30,28 @@ const Nav = () => {
             >
               <li>Profile</li>
             </NavLink>
+            <div>
+              <button
+                className="sign-out"
+                onClick={() => firebase.auth().signOut()}
+              >
+                Sign Out
+              </button>
+              {appContext.image && (
+                <>
+                  <Link to="/profile">
+                    <img
+                      src={appContext.image}
+                      alt="profile"
+                      className="profile-image"
+                    />
+                  </Link>
+                  <div className="nickname">
+                    Nickname : {appContext.nickName}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         ) : (
           <NavLink
