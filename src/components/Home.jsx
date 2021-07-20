@@ -32,7 +32,6 @@ const Home = () => {
                   ...prev,
                   img: doc.data().photoUrl,
                   userName: doc.data().userName,
-                  user: appContext.userId,
                 };
               });
             }

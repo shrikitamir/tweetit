@@ -23,7 +23,7 @@ const SignUp = ({ history }) => {
             .then((doc) => {
               if (!doc.exists) {
                 usersRef.doc(cred.user.uid).set({
-                  userName: "undefined",
+                  userName: "defaultUserName",
                   photoUrl: anonymous,
                 });
               }
@@ -46,7 +46,7 @@ const SignUp = ({ history }) => {
             .createUserWithEmailAndPassword(email.value, password.value)
             .then((cred) => {
               usersRef.doc(cred.user.uid).set({
-                userName: "undefined",
+                userName: "defaultUserName",
                 photoUrl: anonymous,
               });
             });

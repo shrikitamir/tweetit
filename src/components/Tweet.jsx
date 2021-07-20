@@ -1,7 +1,6 @@
 import React from "react";
 
 const Tweet = (props) => {
-  console.log(props.user);
   return (
     <div className="tweet-box">
       <div className="tweet-box-top">
