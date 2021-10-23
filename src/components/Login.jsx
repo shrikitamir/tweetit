@@ -23,7 +23,7 @@ const Login = ({ history }) => {
             .then((doc) => {
               if (!doc.exists) {
                 usersRef.doc(cred.user.uid).set({
-                  userName: "defaultUserName",
+                  userName: "noUsername",
                   photoUrl: anonymous,
                 });
               }

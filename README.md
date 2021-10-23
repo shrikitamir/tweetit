@@ -1,5 +1,6 @@
-Tweeter site by Tamir Shriki
+# Chat App
 
-Visit ITC Fullstack chat at:
+Realtime chat app using React and Firebase.
 
-tweetit-2a9fb.web.app
+<a href='tweetit-2a9fb.web.app'>TweetIt!</a>
+

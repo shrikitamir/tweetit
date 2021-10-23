@@ -21,6 +21,15 @@ const CreateTweet = () => {
     });
   };
 
+  const formattedDate = () => {
+    return new Date().toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!appContext.tweet.content) return;
@@ -28,7 +37,7 @@ const CreateTweet = () => {
       .doc()
       .set({
         ...appContext.tweet,
-        date: new Date().toISOString(),
+        date: formattedDate(),
         sort: new Date().getTime(),
       })
       .catch((err) => {

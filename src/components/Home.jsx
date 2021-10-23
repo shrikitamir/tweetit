@@ -32,6 +32,7 @@ const Home = () => {
                   ...prev,
                   img: doc.data().photoUrl,
                   userName: doc.data().userName,
+                  userId: appContext.userId,
                 };
               });
             }
@@ -41,7 +42,6 @@ const Home = () => {
         }
       }
     })();
-    console.log("hi");
     // eslint-disable-next-line
   }, [appContext.userId, appContext.nickName]);
 
@@ -109,7 +109,7 @@ const Home = () => {
             date={e.date}
             content={e.content}
             img={e.img}
-            user={e.user}
+            userId={e.userId}
           />
         ))
       )}

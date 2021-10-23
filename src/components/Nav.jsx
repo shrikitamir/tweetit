@@ -46,9 +46,7 @@ const Nav = () => {
                       className="profile-image"
                     />
                   </Link>
-                  <div className="nickname">
-                    Nickname : {appContext.nickName}
-                  </div>
+                  <div className="nickname">{appContext.nickName}</div>
                 </>
               )}
             </div>
